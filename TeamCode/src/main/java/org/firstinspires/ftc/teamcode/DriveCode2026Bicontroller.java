@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.drive.PoseStorage;
@@ -45,6 +46,8 @@ public class DriveCode2026Bicontroller extends LinearOpMode {
         intake = hardwareMap.get(DcMotor.class, "intake");
         launch0 = hardwareMap.get(DcMotor.class, "launch0");
         launch1 = hardwareMap.get(DcMotor.class, "launch1");
+        launch0.setDirection(DcMotorSimple.Direction.REVERSE);
+        launch1.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // --- Initialize CRServo ---
         corner = hardwareMap.get(CRServo.class, "corner");
