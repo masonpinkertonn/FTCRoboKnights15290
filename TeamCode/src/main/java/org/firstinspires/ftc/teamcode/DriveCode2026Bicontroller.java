@@ -118,8 +118,8 @@ public class DriveCode2026Bicontroller extends LinearOpMode {
 
             //launch button (Y button)
             if(gamepad2.y){
-                launch0.setPower(-1);
-                launch1.setPower(-1);
+                launch0.setPower(1);
+                launch1.setPower(1);
             }else{
                 launch0.setPower(0);
                 launch1.setPower(0);
