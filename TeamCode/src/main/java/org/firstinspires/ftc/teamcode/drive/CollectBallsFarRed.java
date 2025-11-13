@@ -1,9 +1,6 @@
 package org.firstinspires.ftc.teamcode.drive;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -12,8 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@TeleOp(name = "Red - Auto Ball Collection")
-public class CollectBallsRed extends OpMode {
+@TeleOp(name = "Red - Far Auto Ball Collection")
+public class CollectBallsFarRed extends OpMode {
     DcMotor intake;
     DcMotor vector;
 
@@ -22,11 +19,11 @@ public class CollectBallsRed extends OpMode {
 
     CRServo corner;
 
+    TrajectorySequence mySequence;
+
     SampleMecanumDrive drive;
 
     Pose2d start;
-
-    TrajectorySequence mySequence;
 
     @Override
     public void init() {
@@ -47,7 +44,7 @@ public class CollectBallsRed extends OpMode {
 
         drive = new SampleMecanumDrive(hardwareMap);
 
-        start = new Pose2d(-50, 50, Math.toRadians(45));
+        start = new Pose2d(75, 25, Math.toRadians(90));
 
         drive.setPoseEstimate(start);
 
@@ -57,7 +54,7 @@ public class CollectBallsRed extends OpMode {
                 /*.splineTo(new Vector2d(11.75, -28), Math.toRadians(-90))
                 .forward(50)
                 .waitSeconds(50)*/
-                .strafeTo(new Vector2d(-25, 25))
+                .lineToLinearHeading(new Pose2d(-25, 25, Math.toRadians(45)))
                 .addTemporalMarker(() -> {
                     intake.setPower(0.6);
                     launch0.setPower(1.0);
@@ -82,7 +79,7 @@ public class CollectBallsRed extends OpMode {
                 .lineToLinearHeading(new Pose2d(-11.75, 28, Math.toRadians(90)))
                 .addDisplacementMarker(() -> {
                     intake.setPower(0.6);
-                    vector.setPower(0.75);
+                    vector.setPower(1.0);
                 })
                 //.waitSeconds(0.5)
                 .forward(25)
@@ -90,7 +87,7 @@ public class CollectBallsRed extends OpMode {
                     intake.setPower(0.0);
                     vector.setPower(0.0);
                 })
-                .back(25)
+                //.back(25)
                 .lineToLinearHeading(new Pose2d(-25, 25, Math.toRadians(45)))
                 //.turn(Math.toRadians(-45))
                 .addTemporalMarker(() -> {
@@ -110,15 +107,15 @@ public class CollectBallsRed extends OpMode {
                 .lineToLinearHeading(new Pose2d(11.75, 28, Math.toRadians(90)))
                 .addDisplacementMarker(() -> {
                     intake.setPower(0.6);
-                    vector.setPower(0.75);
+                    vector.setPower(1.0);
                 })
                 .waitSeconds(0.1)
-                .forward(27)
+                .forward(26)
                 .addDisplacementMarker(() -> {
                     intake.setPower(0.0);
                     vector.setPower(0.0);
                 })
-                .back(25)
+                //.back(25)
                 .lineToLinearHeading(new Pose2d(-25, 25, Math.toRadians(45)))
                 //.turn(Math.toRadians(-45))
                 .addTemporalMarker(() -> {
@@ -138,15 +135,15 @@ public class CollectBallsRed extends OpMode {
                 .lineToLinearHeading(new Pose2d(37.25, 28, Math.toRadians(90)))
                 .addDisplacementMarker(() -> {
                     intake.setPower(0.6);
-                    vector.setPower(0.75);
+                    vector.setPower(1.0);
                 })
                 .waitSeconds(0.1)
-                .forward(32.5)
+                .forward(30)
                 .addDisplacementMarker(() -> {
                     intake.setPower(0.0);
                     vector.setPower(0.0);
                 })
-                .back(25)
+                //.back(25)
                 .lineToLinearHeading(new Pose2d(-25, 25, Math.toRadians(45)))
                 //.turn(Math.toRadians(-45))
                 .addTemporalMarker(() -> {

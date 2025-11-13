@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.drive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,17 +12,31 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @TeleOp(name = "Blue - Far Auto Ball Collection")
-public class CollectBallsFar extends LinearOpMode {
+public class CollectBallsFar extends OpMode {
+    DcMotor intake;
+    DcMotor vector;
+
+    DcMotor launch0;
+    DcMotor launch1;
+
+    CRServo corner;
+
+    TrajectorySequence mySequence;
+
+    SampleMecanumDrive drive;
+
+    Pose2d start;
 
     @Override
-    public void runOpMode() throws InterruptedException {
-        DcMotor intake = hardwareMap.get(DcMotor.class, "intake");
-        DcMotor vector = hardwareMap.get(DcMotor.class, "vector");
+    public void init() {
+        intake = hardwareMap.get(DcMotor.class, "intake");
+        vector = hardwareMap.get(DcMotor.class, "vector");
 
-        DcMotor launch0 = hardwareMap.get(DcMotor.class, "launch0");
-        DcMotor launch1 = hardwareMap.get(DcMotor.class, "launch1");
+        launch0 = hardwareMap.get(DcMotor.class, "launch0");
+        launch1 = hardwareMap.get(DcMotor.class, "launch1");
 
-        CRServo corner = hardwareMap.get(CRServo.class, "corner");
+        corner = hardwareMap.get(CRServo.class, "corner");
+
         corner.setDirection(DcMotorSimple.Direction.REVERSE);
 
         launch0.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -29,13 +44,13 @@ public class CollectBallsFar extends LinearOpMode {
 
         intake.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+        drive = new SampleMecanumDrive(hardwareMap);
 
-        Pose2d start = new Pose2d(75, -25, Math.toRadians(-90));
+        start = new Pose2d(75, -25, Math.toRadians(-90));
 
         drive.setPoseEstimate(start);
 
-        TrajectorySequence mySequence = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+        mySequence = drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                 //.lineTo(new Vector2d(10, 0))
                 //.turn(Math.toRadians(-135))
                 /*.splineTo(new Vector2d(11.75, -28), Math.toRadians(-90))
@@ -148,9 +163,13 @@ public class CollectBallsFar extends LinearOpMode {
                 })
                 .build();
 
-        waitForStart();
+        drive.followTrajectorySequenceAsync(mySequence);
+    }
 
-        if (!isStopRequested())
-            drive.followTrajectorySequence(mySequence);
+    @Override
+    public void loop() {
+        drive.update();
+        //drive.updatePoseEstimate();
+        PoseStorage.currentPose = drive.getPoseEstimate();
     }
 }
