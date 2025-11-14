@@ -118,7 +118,16 @@ public class DriveCode2026BicontrollerRed extends LinearOpMode {
                 launch1.setPower(0);
             }
 
-            if (gamepad1.a || gamepad2.a)
+            //long launch button(A button)
+            if(gamepad2.y){
+                launch0.setPower(-1);
+                launch1.setPower(-1);
+            }else{
+                launch0.setPower(0);
+                launch1.setPower(0);
+            }
+
+            if (gamepad1.a)
             {
                 drive.followTrajectorySequence(drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .lineToLinearHeading(new Pose2d(-25, 25, Math.toRadians(45)))
